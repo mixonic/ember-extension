@@ -20,7 +20,31 @@ function listenToPort(port) {
 
   port.start();
 }
+
 // let ember-debug know that content script has executed
 if (document.body) {
   document.body.dataset.emberExtension = 1;
 }
+
+// clear a possible previous Ember icon
+chrome.extension.sendMessage({ type: 'resetEmberIcon' });
+
+// inject JS into the page to check for an app on domready
+var script = document.createElement('script');
+script.type = "text/javascript";
+script.text = "if (window.jQuery) window.jQuery(function(){"+
+  "var version = window.Ember && window.Ember.VERSION;"+
+  "if (version) {"+
+    "var versions = {"+
+      "ember: version,"+
+      "jquery: jQuery.fn.jquery,"+
+      "handlebars: Handlebars.VERSION"+
+    "};"+
+    "if (window.DS) versions.data = window.DS.VERSION;"+
+    "window.postMessage({"+
+      "type: 'emberVersion',"+
+      "versions: versions"+
+    "}, '*');"+
+  "}"+
+"});";
+if (document.body) document.body.appendChild(script);

@@ -1,9 +1,29 @@
 /*global chrome*/
-chrome.extension.onMessage.addListener(function(request, sender) {
-  var port = ports[sender.tab.id];
 
-  if (port) {
-    port.postMessage(request);
+function showAction(tabId, versions){
+  chrome.pageAction.show(tabId);
+  chrome.pageAction.setTitle({tabId: tabId, title: ""+
+    "Ember "+versions.ember+"\n"+
+    "Handlebars "+versions.handlebars+"\n"+
+    "jQuery "+versions.jquery+
+    (versions.data ? "\nEmber-Data "+versions.data : '')
+  });
+}
+
+function hideAction(tabId){
+  chrome.pageAction.hide(tabId);
+}
+
+chrome.extension.onMessage.addListener(function(request, sender) {
+  if (!sender.tab) {
+    // noop
+  } else if (request && request.type === 'emberVersion') {
+    showAction(sender.tab.id, request.versions);
+  } else if (request && request.type === 'resetEmberIcon') {
+    hideAction(sender.tab.id);
+  } else {
+    var port = ports[sender.tab.id];
+    if (port) { port.postMessage(request); }
   }
 });
 
