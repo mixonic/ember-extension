@@ -1,12 +1,16 @@
 /*global chrome*/
 
+function generateVersionsTooltip(versions) {
+  return versions.map(function(lib) {
+    return lib.name + " " + lib.version;
+  }).join("\n");
+}
+
 function showAction(tabId, versions){
   chrome.pageAction.show(tabId);
-  chrome.pageAction.setTitle({tabId: tabId, title: ""+
-    "Ember "+versions.ember+"\n"+
-    "Handlebars "+versions.handlebars+"\n"+
-    "jQuery "+versions.jquery+
-    (versions.data ? "\nEmber-Data "+versions.data : '')
+  chrome.pageAction.setTitle({
+    tabId: tabId,
+    title: generateVersionsTooltip(versions)
   });
 }
 

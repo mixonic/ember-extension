@@ -33,14 +33,9 @@ chrome.extension.sendMessage({ type: 'resetEmberIcon' });
 var script = document.createElement('script');
 script.type = "text/javascript";
 script.text = "if (window.jQuery) window.jQuery(function(){"+
-  "var version = window.Ember && window.Ember.VERSION;"+
+  "var version = window.Ember && window.Ember.libraries;"+
   "if (version) {"+
-    "var versions = {"+
-      "ember: version,"+
-      "jquery: jQuery.fn.jquery,"+
-      "handlebars: Handlebars.VERSION"+
-    "};"+
-    "if (window.DS) versions.data = window.DS.VERSION;"+
+    "var versions = window.Ember.libraries.toArray();" +
     "window.postMessage({"+
       "type: 'emberVersion',"+
       "versions: versions"+
