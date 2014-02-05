@@ -7,10 +7,16 @@ function generateVersionsTooltip(versions) {
 }
 
 function showAction(tabId, versions){
-  chrome.pageAction.show(tabId);
-  chrome.pageAction.setTitle({
-    tabId: tabId,
-    title: generateVersionsTooltip(versions)
+  chrome.storage.sync.get("options", function(data) {
+    var options = data.options;
+
+    if (!options.showTomster) { return; }
+
+    chrome.pageAction.show(tabId);
+    chrome.pageAction.setTitle({
+      tabId: tabId,
+      title: generateVersionsTooltip(versions)
+    });
   });
 }
 

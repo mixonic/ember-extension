@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>Settings | Ember Inspector</title>
+  <link rel="stylesheet" href="vendor/chrome-bootstrap.css">
+
+  <style>
+    /* .navigation img {
+      width: 50px;
+    } */
+    .navigation img {
+      margin-left: 20px;
+      margin-top: 20px;
+      width: 100px;
+    }
+  </style>
+</head>
+
+<body class="chrome-bootstrap">
+
+  <div class="frame">
+    <div class="navigation">
+      <img src="/images/tomster.png">
+      <ul class="menu">
+        <li class="selected">
+          <a href="#">Settings</a>
+        </li>
+      </ul>
+      <ul class="menu">
+        <li class="">
+          <a href="https://github.com/tildeio/ember-extension">Help</a>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="main-view view">
+      <div class="Settings">
+        <header>
+          <h1>Settings</h1>
+        </header>
+
+        <div class="content">
+          <form action="submit">
+            <label>Show page action with version information (Tomster logo) <input type="checkbox" data-settings="tomster"></label>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="options.js"></script>
+</html>
